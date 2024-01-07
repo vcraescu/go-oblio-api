@@ -1,0 +1,12 @@
+{
+  "status": 200,
+  "statusMessage": "Success",
+  "data": [
+    {
+      "cif": "123456",
+      "company": "FOOBAR S.R.L.",
+      "userTypeAccess": "Administrator",
+      "useStock": 0
+    }
+  ]
+}

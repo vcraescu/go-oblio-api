@@ -1,0 +1,16 @@
+{
+  "status": 200,
+  "statusMessage": "Success",
+  "data": [
+    {
+      "name": "Normala",
+      "percent": 19,
+      "default": true
+    },
+    {
+      "name": "Redusa",
+      "percent": 9,
+      "default": false
+    }
+  ]
+}

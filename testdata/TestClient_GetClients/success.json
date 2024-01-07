@@ -1,0 +1,22 @@
+{
+  "status": 200,
+  "statusMessage": "Success",
+  "data": [
+    {
+      "cif": "RO37311090",
+      "name": "OBLIO SOFTWARE SRL",
+      "rc": "J13/887/2017",
+      "code": "",
+      "address": "",
+      "state": "Constanta",
+      "city": "Constanta",
+      "country": "",
+      "iban": "",
+      "bank": "",
+      "email": "",
+      "phone": "",
+      "contact": "",
+      "vatPayer": "1"
+    }
+  ]
+}

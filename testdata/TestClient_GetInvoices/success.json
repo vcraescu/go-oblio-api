@@ -1,0 +1,48 @@
+{
+  "status": 200,
+  "statusMessage": "Success",
+  "data": [
+    {
+      "id": "10000",
+      "draft": "1",
+      "canceled": "0",
+      "collected": "1",
+      "seriesName": "SC",
+      "number": "0001",
+      "issueDate": "2023-01-31",
+      "dueDate": "2023-02-15",
+      "precision": "2",
+      "currency": "RON",
+      "exchangeRate": "0.000000",
+      "total": "21000.0000",
+      "issuerName": "Ion Popescu",
+      "issuerId": "1820913326911",
+      "noticeNumber": "",
+      "deputyName": "",
+      "deputyIdentityCard": "MZ123475",
+      "deputyAuto": "",
+      "mentions": "",
+      "useStock": "1",
+      "type": "Factura",
+      "link": "https://www.oblio.eu/utils/show_file/?ic=11111&id=11111&it=1111&preload=1",
+      "einvoice": "https://www.oblio.eu/utils/show_file/?ic=111111&id=111111&it=11111&einvoice=1&api=1",
+      "client": {
+        "clientId": "1111111",
+        "cif": "49834438",
+        "name": "FOOBAR DEVELOPMENT SRL",
+        "rc": "J12/1811/2019",
+        "code": "FOO",
+        "address": "BLD. Vasile Lupu,  NR.5",
+        "state": "CLUJ",
+        "city": "MUN. CLUJ-NAPOCA",
+        "country": "ROMANIA",
+        "iban": "RO66INGB0000999900000000",
+        "bank": "ING BANK NV",
+        "contact": "ion.popescu@foobar.com",
+        "phone": "",
+        "email": "ion.popescu@foobar.com",
+        "vatPayer": "1"
+      }
+    }
+  ]
+}

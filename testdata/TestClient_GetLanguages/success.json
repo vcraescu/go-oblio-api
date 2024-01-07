@@ -1,0 +1,14 @@
+{
+  "status": 200,
+  "statusMessage": "Success",
+  "data": [
+    {
+      "code": "EN",
+      "name": "Engleza"
+    },
+    {
+      "code": "FR",
+      "name": "Franceza"
+    }
+  ]
+}

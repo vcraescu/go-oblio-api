@@ -1,0 +1,20 @@
+{
+  "status": 200,
+  "statusMessage": "Success",
+  "data": [
+    {
+      "type": "Factura",
+      "name": "FCT",
+      "start": "0001",
+      "next": "0051",
+      "default": true
+    },
+    {
+      "type": "Proforma",
+      "name": "PR",
+      "start": "0001",
+      "next": "0008",
+      "default": true
+    }
+  ]
+}

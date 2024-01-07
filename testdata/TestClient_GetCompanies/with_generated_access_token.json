@@ -1,0 +1,11 @@
+{
+  "status": 200,
+  "statusMessage": "Success",
+  "data": [
+    {
+      "cif": "RO37311090",
+      "company": "OBLIO SOFTWARE SRL",
+      "userTypeAccess": "admin"
+    }
+  ]
+}

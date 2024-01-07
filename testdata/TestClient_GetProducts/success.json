@@ -1,0 +1,38 @@
+{
+  "status": 200,
+  "statusMessage": "Success",
+  "data": [
+    {
+      "name": "Montare",
+      "code": "",
+      "description": "",
+      "measuringUnit": "buc",
+      "productType": "Serviciu",
+      "price": "119.00",
+      "currency": "RON",
+      "vatName": "Normala",
+      "vatPercentage": 19,
+      "vatIncluded": true
+    },
+    {
+      "name": "Birou",
+      "code": "",
+      "description": "",
+      "measuringUnit": "buc",
+      "productType": "Marfa",
+      "active": "1",
+      "stock": [
+        {
+          "workStation": "Sediu",
+          "management": "Magazin",
+          "quantity": 2,
+          "price": "200.00",
+          "currency": "RON",
+          "vatName": "Normala",
+          "vatPercentage": 19,
+          "vatIncluded": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "status": 200,
+  "statusMessage": "Success",
+  "data": [
+    {
+      "management": "Magazin",
+      "workStation": "Sediu",
+      "managementType": "Cantitativ Valorica"
+    },
+    {
+      "management": "Mobila",
+      "workStation": "Depozit",
+      "managementType": "Cantitativ Valorica"
+    }
+  ]
+}
