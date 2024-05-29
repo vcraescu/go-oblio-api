@@ -46,7 +46,7 @@ type Collect struct {
 	Type           CollectType `json:"type,omitempty"`
 	SeriesName     string      `json:"seriesName,omitempty"`
 	DocumentNumber string      `json:"documentNumber,omitempty"`
-	Value          int         `json:"value,omitempty"`
+	Value          string      `json:"value,omitempty"`
 	IssueDate      Date        `json:"issueDate,omitempty"`
 	Mentions       string      `json:"mentions,omitempty"`
 }
