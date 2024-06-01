@@ -2,13 +2,18 @@ package types_test
 
 import (
 	"encoding/json"
-	"github.com/google/go-querystring/query"
+	"fmt"
 	"testing"
+	"time"
+
+	"github.com/google/go-querystring/query"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/vcraescu/go-oblio-api/types"
 )
+
+var now = time.Now()
 
 func TestDate_MarshalJSON(t *testing.T) {
 	t.Parallel()
@@ -33,8 +38,6 @@ func TestDate_MarshalJSON(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
-
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -93,8 +96,6 @@ func TestDate_UnmarshalJSON(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
-
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -140,8 +141,6 @@ func TestDate_EncodeValues(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
-
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -189,8 +188,6 @@ func TestBool_MarshalJSON(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
-
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -238,8 +235,6 @@ func TestBool_EncodeValues(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
-
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -320,8 +315,6 @@ func TestBool_UnmarshalJSON(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
-
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -370,8 +363,6 @@ func TestInt_MarshalJSON(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
-
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -445,8 +436,6 @@ func TestInt_UnmarshalJSON(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
-
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -461,6 +450,114 @@ func TestInt_UnmarshalJSON(t *testing.T) {
 
 			require.NoError(t, err)
 			require.Equal(t, tt.want, got.Value)
+		})
+	}
+}
+
+func TestTimestamp_MarshalJSON(t *testing.T) {
+	t.Parallel()
+
+	type args struct {
+		Date types.Timestamp `json:"timestamp"`
+	}
+
+	tests := []struct {
+		name    string
+		args    args
+		want    string
+		wantErr assert.ErrorAssertionFunc
+	}{
+		{
+			name: "success",
+			args: args{
+				Date: types.Timestamp(now),
+			},
+			want: fmt.Sprintf(`{"timestamp":%d}`, now.Unix()),
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			got, err := json.Marshal(tt.args)
+
+			if tt.wantErr != nil {
+				tt.wantErr(t, err)
+
+				return
+			}
+
+			require.NoError(t, err)
+			require.JSONEq(t, tt.want, string(got))
+		})
+	}
+}
+
+func TestTimestamp_UnmarshalJSON(t *testing.T) {
+	t.Parallel()
+
+	type args struct {
+		js string
+	}
+
+	type Got struct {
+		Timestamp types.Timestamp
+	}
+
+	tests := []struct {
+		name    string
+		args    args
+		want    types.Timestamp
+		wantErr assert.ErrorAssertionFunc
+	}{
+		{
+			name: "empty string",
+			args: args{
+				js: `{"timestamp":""}`,
+			},
+		},
+		{
+			name: "null",
+			args: args{
+				js: `{"timestamp":null}`,
+			},
+		},
+		{
+			name: "string",
+			args: args{
+				js: fmt.Sprintf(`{"timestamp":"%d"}`, now.Unix()),
+			},
+			want: types.Timestamp(now),
+		},
+		{
+			name: "integer",
+			args: args{
+				js: fmt.Sprintf(`{"timestamp":%d}`, now.Unix()),
+			},
+			want: types.Timestamp(now),
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			got := Got{}
+			err := json.Unmarshal([]byte(tt.args.js), &got)
+
+			if tt.wantErr != nil {
+				tt.wantErr(t, err)
+
+				return
+			}
+
+			require.NoError(t, err)
+			require.Equal(
+				t,
+				time.Time(tt.want).Format(time.RFC3339),
+				time.Time(got.Timestamp).Format(time.RFC3339),
+			)
 		})
 	}
 }

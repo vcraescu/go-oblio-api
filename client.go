@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
-	"strconv"
 	"sync"
 	"time"
 
@@ -116,12 +115,7 @@ func (c *Client) generateToken(ctx context.Context) (string, error) {
 		return "", fmt.Errorf("generateAuthorizeToken: %w", err)
 	}
 
-	ttl, err := strconv.Atoi(resp.ExpiresIn)
-	if err != nil {
-		return "", fmt.Errorf("invalid expiresIn: %w", err)
-	}
-
-	if err := c.tokenStorage.Set(ctx, resp.AccessToken, time.Duration(ttl)-time.Second*10); err != nil {
+	if err := c.tokenStorage.Set(ctx, resp.AccessToken, time.Duration(resp.ExpiresIn)-time.Second*10); err != nil {
 		return "", fmt.Errorf("set: %w", err)
 	}
 

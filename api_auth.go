@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/vcraescu/go-oblio-api/types"
 	"github.com/vcraescu/go-reqbuilder"
 )
 
@@ -26,11 +27,11 @@ func (r *generateTokenRequest) Validate() error {
 }
 
 type GenerateTokenResponse struct {
-	AccessToken string `json:"access_token,omitempty"`
-	ExpiresIn   string `json:"expires_in,omitempty"`
-	TokenType   string `json:"token_type,omitempty"`
-	Scope       string `json:"scope,omitempty"`
-	RequestTime string `json:"request_time,omitempty"`
+	AccessToken string          `json:"access_token,omitempty"`
+	ExpiresIn   types.Int       `json:"expires_in,omitempty"`
+	TokenType   string          `json:"token_type,omitempty"`
+	Scope       string          `json:"scope,omitempty"`
+	RequestTime types.Timestamp `json:"request_time,omitempty"`
 }
 
 func (c *Client) GenerateToken(ctx context.Context) (*GenerateTokenResponse, error) {
