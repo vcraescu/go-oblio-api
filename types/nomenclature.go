@@ -14,21 +14,23 @@ type VATRate struct {
 }
 
 type Client struct {
-	ClientID string `json:"clientId,omitempty"`
-	CIF      string `json:"cif,omitempty"`
-	Name     string `json:"name,omitempty"`
-	RC       string `json:"rc,omitempty"`
-	Code     string `json:"code,omitempty"`
-	Address  string `json:"address,omitempty"`
-	State    string `json:"state,omitempty"`
-	City     string `json:"city,omitempty"`
-	Country  string `json:"country,omitempty"`
-	IBAN     string `json:"iban,omitempty"`
-	Bank     string `json:"bank,omitempty"`
-	Email    string `json:"email,omitempty"`
-	Phone    string `json:"phone,omitempty"`
-	Contact  string `json:"contact,omitempty"`
-	VATPayer Bool   `json:"vatPayer,omitempty"`
+	ClientID     string `json:"clientId,omitempty"`
+	CIF          string `json:"cif,omitempty"`
+	Name         string `json:"name,omitempty"`
+	RC           string `json:"rc,omitempty"`
+	Code         string `json:"code,omitempty"`
+	Address      string `json:"address,omitempty"`
+	State        string `json:"state,omitempty"`
+	City         string `json:"city,omitempty"`
+	Country      string `json:"country,omitempty"`
+	IBAN         string `json:"iban,omitempty"`
+	Bank         string `json:"bank,omitempty"`
+	Email        string `json:"email,omitempty"`
+	Phone        string `json:"phone,omitempty"`
+	Contact      string `json:"contact,omitempty"`
+	VATPayer     Bool   `json:"vatPayer,omitempty"`
+	Save         Bool   `json:"save,omitempty"`
+	Autocomplete Bool   `json:"autocomplete,omitempty"`
 }
 
 type Stock struct {
