@@ -27,3 +27,4 @@ creds/
 data/
 .serverless
 bin/
+coverage
