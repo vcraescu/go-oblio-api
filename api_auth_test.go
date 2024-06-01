@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/vcraescu/go-oblio-api"
 	"github.com/vcraescu/go-oblio-api/internal/testutil"
+	"github.com/vcraescu/go-oblio-api/types"
 	"github.com/vcraescu/go-reqbuilder"
 )
 
@@ -52,9 +53,9 @@ func TestClient_GenerateAuthorizeToken(t *testing.T) {
 			},
 			want: &oblio.GenerateTokenResponse{
 				AccessToken: accessToken,
-				ExpiresIn:   "3600",
+				ExpiresIn:   types.Int(3600),
 				TokenType:   "Bearer",
-				RequestTime: "100",
+				RequestTime: types.Timestamp(now),
 			},
 		},
 	}

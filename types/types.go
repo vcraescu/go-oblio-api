@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/google/go-querystring/query"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/google/go-querystring/query"
 )
 
 type Marshaler interface {
@@ -127,7 +128,7 @@ func (b Bool) EncodeValues(key string, v *url.Values) error {
 	return nil
 }
 
-type Int int
+type Int int64
 
 var _ Marshaler = (*Int)(nil)
 
@@ -162,4 +163,27 @@ func (i *Int) UnmarshalJSON(data []byte) error {
 
 func (i Int) MarshalJSON() ([]byte, error) {
 	return json.Marshal(fmt.Sprint(i))
+}
+
+type Timestamp time.Time
+
+func (t *Timestamp) UnmarshalJSON(data []byte) error {
+	data = bytes.ReplaceAll(bytes.Trim(data, `"`), []byte("null"), nil)
+
+	if len(data) == 0 {
+		return nil
+	}
+
+	v, err := strconv.ParseInt(string(data), 10, 64)
+	if err != nil {
+		return fmt.Errorf("parseInt: %w", err)
+	}
+
+	*t = Timestamp(time.Unix(v, 0))
+
+	return nil
+}
+
+func (t Timestamp) MarshalJSON() ([]byte, error) {
+	return json.Marshal(time.Time(t).Unix())
 }

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -16,6 +15,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/vcraescu/go-oblio-api"
 	"github.com/vcraescu/go-oblio-api/internal/testutil"
+	"github.com/vcraescu/go-oblio-api/types"
 )
 
 const (
@@ -23,6 +23,8 @@ const (
 	clientID     = "test-client-id"
 	clientSecret = "test-client-secret"
 )
+
+var now = time.Now()
 
 func StartServer(t *testing.T, respBody []byte, wantRequest testutil.HTTPRequestAssertionFunc) string {
 	t.Helper()
@@ -68,9 +70,9 @@ func NewAuthorizationHandler(t *testing.T) http.HandlerFunc {
 
 		err = json.NewEncoder(w).Encode(oblio.GenerateTokenResponse{
 			AccessToken: accessToken,
-			ExpiresIn:   fmt.Sprint(time.Hour.Seconds()),
+			ExpiresIn:   types.Int(3600),
 			TokenType:   "Bearer",
-			RequestTime: "100",
+			RequestTime: types.Timestamp(now),
 		})
 		require.NoError(t, err)
 	}
@@ -119,5 +121,5 @@ func RunTest(t *testing.T, test Test) {
 	}
 
 	require.NoError(t, err)
-	require.Equal(t, test.want, got)
+	require.EqualExportedValues(t, test.want, got)
 }
