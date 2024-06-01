@@ -3,7 +3,6 @@ package oblio_test
 import (
 	"context"
 	"net/http"
-	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -98,7 +97,7 @@ func TestClient_GetCompanies(t *testing.T) {
 		tt := tt
 
 		t.Run(tt.name, func(t *testing.T) {
-			runSubTest(t, test{
+			RunTest(t, Test{
 				wantReq: tt.wantReq,
 				want:    tt.want,
 				wantErr: tt.wantErr,
@@ -169,7 +168,7 @@ func TestClient_GetVATRates(t *testing.T) {
 		tt := tt
 
 		t.Run(tt.name, func(t *testing.T) {
-			runSubTest(t, test{
+			RunTest(t, Test{
 				wantReq: tt.wantReq,
 				want:    tt.want,
 				wantErr: tt.wantErr,
@@ -238,7 +237,7 @@ func TestClient_GetClients(t *testing.T) {
 		tt := tt
 
 		t.Run(tt.name, func(t *testing.T) {
-			runSubTest(t, test{
+			RunTest(t, Test{
 				wantReq: tt.wantReq,
 				want:    tt.want,
 				wantErr: tt.wantErr,
@@ -326,7 +325,7 @@ func TestClient_GetProducts(t *testing.T) {
 		tt := tt
 
 		t.Run(tt.name, func(t *testing.T) {
-			runSubTest(t, test{
+			RunTest(t, Test{
 				wantReq: tt.wantReq,
 				want:    tt.want,
 				wantErr: tt.wantErr,
@@ -401,7 +400,7 @@ func TestClient_GetSeries(t *testing.T) {
 		tt := tt
 
 		t.Run(tt.name, func(t *testing.T) {
-			runSubTest(t, test{
+			RunTest(t, Test{
 				wantReq: tt.wantReq,
 				want:    tt.want,
 				wantErr: tt.wantErr,
@@ -467,10 +466,8 @@ func TestClient_GetLanguages(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
-
 		t.Run(tt.name, func(t *testing.T) {
-			runSubTest(t, test{
+			RunTest(t, Test{
 				wantReq: tt.wantReq,
 				want:    tt.want,
 				wantErr: tt.wantErr,
@@ -541,7 +538,7 @@ func TestClient_GetManagement(t *testing.T) {
 		tt := tt
 
 		t.Run(tt.name, func(t *testing.T) {
-			runSubTest(t, test{
+			RunTest(t, Test{
 				wantReq: tt.wantReq,
 				want:    tt.want,
 				wantErr: tt.wantErr,
@@ -550,39 +547,4 @@ func TestClient_GetManagement(t *testing.T) {
 			})
 		})
 	}
-}
-
-type test struct {
-	wantReq testutil.HTTPRequestAssertionFunc
-	want    any
-	wantErr assert.ErrorAssertionFunc
-	method  string
-	arg     any
-}
-
-func runSubTest(t *testing.T, test test) {
-	t.Parallel()
-
-	var (
-		respBody = testutil.LoadTestDataJSON(t)
-		baseURL  = StartServer(t, respBody, test.wantReq)
-		client   = oblio.NewClient(clientID, clientSecret, oblio.WithBaseURL(baseURL))
-	)
-
-	out := reflect.
-		ValueOf(client).
-		MethodByName(test.method).
-		Call([]reflect.Value{reflect.ValueOf(context.Background()), reflect.ValueOf(test.arg)})
-
-	got := out[0].Interface()
-	err, _ := out[1].Interface().(error)
-
-	if test.wantErr != nil {
-		test.wantErr(t, err)
-
-		return
-	}
-
-	require.NoError(t, err)
-	require.Equal(t, test.want, got)
 }

@@ -2,14 +2,17 @@ package oblio_test
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/vcraescu/go-oblio-api"
 	"github.com/vcraescu/go-oblio-api/internal/testutil"
@@ -67,8 +70,54 @@ func NewAuthorizationHandler(t *testing.T) http.HandlerFunc {
 			AccessToken: accessToken,
 			ExpiresIn:   fmt.Sprint(time.Hour.Seconds()),
 			TokenType:   "Bearer",
-			RequestTime: fmt.Sprint(time.Now().Second()),
+			RequestTime: "100",
 		})
 		require.NoError(t, err)
 	}
+}
+
+type Test struct {
+	wantReq    testutil.HTTPRequestAssertionFunc
+	want       any
+	wantErr    assert.ErrorAssertionFunc
+	method     string
+	arg        any
+	noFixtures bool
+}
+
+func RunTest(t *testing.T, test Test) {
+	t.Parallel()
+
+	var respBody []byte
+
+	if !test.noFixtures {
+		respBody = testutil.LoadTestDataJSON(t)
+	}
+
+	var (
+		baseURL = StartServer(t, respBody, test.wantReq)
+		client  = oblio.NewClient(clientID, clientSecret, oblio.WithBaseURL(baseURL))
+		args    = []reflect.Value{reflect.ValueOf(context.Background())}
+	)
+
+	if test.arg != nil {
+		args = append(args, reflect.ValueOf(test.arg))
+	}
+
+	out := reflect.
+		ValueOf(client).
+		MethodByName(test.method).
+		Call(args)
+
+	got := out[0].Interface()
+	err, _ := out[1].Interface().(error)
+
+	if test.wantErr != nil {
+		test.wantErr(t, err)
+
+		return
+	}
+
+	require.NoError(t, err)
+	require.Equal(t, test.want, got)
 }
