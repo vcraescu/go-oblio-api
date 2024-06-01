@@ -2,11 +2,14 @@ package oblio_test
 
 import (
 	"context"
+	"net/http"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/vcraescu/go-oblio-api"
+	"github.com/vcraescu/go-oblio-api/internal/testutil"
+	"github.com/vcraescu/go-reqbuilder"
 )
 
 func TestClient_GenerateAuthorizeToken(t *testing.T) {
@@ -17,10 +20,16 @@ func TestClient_GenerateAuthorizeToken(t *testing.T) {
 		clientSecret string
 	}
 
+	reqBuilder := reqbuilder.
+		NewBuilder("/").
+		WithPath("/authorize/token").
+		WithMethod(http.MethodPost)
+
 	tests := []struct {
 		name    string
 		fields  fields
 		want    *oblio.GenerateTokenResponse
+		wantReq testutil.HTTPRequestAssertionFunc
 		wantErr assert.ErrorAssertionFunc
 	}{
 		{
@@ -29,32 +38,36 @@ func TestClient_GenerateAuthorizeToken(t *testing.T) {
 				clientID:     clientID,
 				clientSecret: clientSecret,
 			},
+			wantReq: func(t *testing.T, got *http.Request) bool {
+				want, err := reqBuilder.
+					WithHeaders(reqbuilder.JSONContentHeader).
+					WithBody(oblio.GenerateAuthorizeTokenRequest{
+						ClientID:     clientID,
+						ClientSecret: clientSecret,
+					}).
+					Build(context.Background())
+				require.NoError(t, err)
+
+				return testutil.AssertEqualHTTPRequest(t, want, got)
+			},
 			want: &oblio.GenerateTokenResponse{
 				AccessToken: accessToken,
+				ExpiresIn:   "3600",
+				TokenType:   "Bearer",
+				RequestTime: "100",
 			},
 		},
 	}
 
 	for _, tt := range tests {
-		tt := tt
-
 		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
-
-			var (
-				baseURL  = StartServer(t, nil, nil)
-				client   = oblio.NewClient(tt.fields.clientID, tt.fields.clientSecret, oblio.WithBaseURL(baseURL))
-				got, err = client.GenerateToken(context.Background())
-			)
-
-			if tt.wantErr != nil {
-				tt.wantErr(t, err)
-
-				return
-			}
-
-			require.NoError(t, err)
-			require.Equal(t, tt.want.AccessToken, got.AccessToken)
+			RunTest(t, Test{
+				wantReq:    tt.wantReq,
+				want:       tt.want,
+				wantErr:    tt.wantErr,
+				method:     "GenerateToken",
+				noFixtures: true,
+			})
 		})
 	}
 }

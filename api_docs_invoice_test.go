@@ -116,7 +116,7 @@ func TestClient_GetInvoices(t *testing.T) {
 		tt := tt
 
 		t.Run(tt.name, func(t *testing.T) {
-			runSubTest(t, test{
+			RunTest(t, Test{
 				wantReq: tt.wantReq,
 				want:    tt.want,
 				wantErr: tt.wantErr,

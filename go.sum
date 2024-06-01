@@ -6,10 +6,10 @@ github.com/google/go-querystring v1.1.0 h1:AnCroh3fv4ZBgVIf1Iwtovgjaw/GiKJo8M8yD
 github.com/google/go-querystring v1.1.0/go.mod h1:Kcdr2DB4koayq7X8pmAG4sNG59So17icRSOU623lUBU=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
-github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
-github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
-github.com/vcraescu/go-reqbuilder v1.0.1 h1:bbzIN8JbLRNDFLLSvjyPshICvK8L5EITeGWleeaK/Q0=
-github.com/vcraescu/go-reqbuilder v1.0.1/go.mod h1:94WPlPVLWf/kK3fWuJhLMFlR/xujZhFQuwArqQR3gas=
+github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
+github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=
+github.com/vcraescu/go-reqbuilder v1.0.3 h1:dSWdRYq8vt6bXVGWi3dU23k8SYU1DBcjf49QD3QUPwg=
+github.com/vcraescu/go-reqbuilder v1.0.3/go.mod h1:94WPlPVLWf/kK3fWuJhLMFlR/xujZhFQuwArqQR3gas=
 github.com/vcraescu/go-urlvalues v1.0.0 h1:A5uDkJrrXlPOJplv8MQubGUfZAnafs+vnHaYeKOEo1I=
 github.com/vcraescu/go-urlvalues v1.0.0/go.mod h1:rKJMwIY9qintFOVteM09RnihQ/6V1bU1Sl5bCmUkv/Q=
 golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543/go.mod h1:I/5z698sn9Ka8TeJc9MKroUUfqBBauWjQqLJ2OPfmY0=

@@ -4,8 +4,8 @@ go 1.22
 
 require (
 	github.com/google/go-querystring v1.1.0
-	github.com/stretchr/testify v1.8.4
-	github.com/vcraescu/go-reqbuilder v1.0.1
+	github.com/stretchr/testify v1.9.0
+	github.com/vcraescu/go-reqbuilder v1.0.3
 )
 
 require (

@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+
+	"github.com/vcraescu/go-reqbuilder"
 )
 
 type generateTokenRequest struct {
@@ -44,6 +46,7 @@ func (c *Client) GenerateToken(ctx context.Context) (*GenerateTokenResponse, err
 	builder := c.requestBuilder.
 		WithMethod(http.MethodPost).
 		WithPath("/authorize/token").
+		WithHeaders(reqbuilder.JSONContentHeader).
 		WithBody(req)
 	resp := &GenerateTokenResponse{}
 
