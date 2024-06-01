@@ -18,7 +18,7 @@ type CreateInvoiceRequest struct {
 	Language           string                  `json:"language,omitempty"`
 	Precision          types.Int               `json:"precision,omitempty"`
 	Currency           string                  `json:"currency,omitempty"`
-	ExchangeRate       int                     `json:"exchangeRate,omitempty"`
+	ExchangeRate       string                  `json:"exchangeRate,omitempty"`
 	Products           []types.DocumentRow     `json:"products,omitempty"`
 	IssuerName         string                  `json:"issuerName,omitempty"`
 	IssuerID           string                  `json:"issuerId,omitempty"`
